@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist de Magias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Checklist de Magias</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Milagres -->
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4">Milagres</h2>
+                <div id="milagres-list"></div>
+            </div>
+
+            <!-- Feitiços -->
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4">Feitiços</h2>
+                <div id="feiticos-list"></div>
+            </div>
+
+            <!-- Piromancias -->
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4">Piromancias</h2>
+                <div id="piromancias-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const milagres = [
+            "Checklist completa", "Cura", "Trecho de grande cura", "Cura avançada",
+            "Luz solar reconfortante", "Restauração", "Luz solar abundante", "Força",
+            "Ira dos deuses", "Emitir força", "Barreira mágica", "Grande barreira mágica",
+            "Regresso", "Buscar orientação", "Justiça cármica", "Voto de silêncio",
+            "Sereno caminhar da paz", "Lança elétrica", "Grande lança elétrica",
+            "Lança de luz solar", "Lâmina de luz solar", "Lâmina da lua negra",
+            "Dança das espadas do Lorde das Tumbas", "Grande dança das espadas do Lorde das Tumbas"
+        ];
+
+        const feiticos = [
+            "Checklist completa", "Flecha de almas", "Flecha de almas grande",
+            "Flecha de almas intensa", "Grande flecha de almas intensa",
+            "Acúmulo de almas guiado", "Acúmulo de almas guiado cristalizado",
+            "Lança de almas", "Lança de almas cristalizado", "Sopro do dragão branco",
+            "Arma mágica", "Grande arma mágica", "Arma mágica cristalizada",
+            "Escudo mágico", "Escudo mágico robusto", "Chamariz auricular",
+            "Silêncio", "Controle de queda", "Arma oculta", "Corpo oculto",
+            "Reparar", "Conjurar luz", "Camaleão", "Panaceia", "Resistir maldição"
+        ];
+
+        const piromancias = [
+            "Checklist completa", "Bola de fogo", "Orbe de fogo", "Grande bola de fogo",
+            "Grande bola de fogo caótico", "Tempestade de fogo", "Tormenta de fogo",
+            "Tempestade de caos", "Combustão", "Combustão grande", "Onda de fogo",
+            "Açoite de fogo", "Açoite de fogo caótico", "Névoa venenosa",
+            "Névoa tóxica", "Onda ácida", "Suor instantâneo", "Pele de ferro",
+            "Poder interior", "Encantar mortos-vivos"
+        ];
+
+        function createCheckbox(item, list) {
+            const checked = localStorage.getItem(`${list}-${item}`) === 'true';
+            return `
+                <div class="flex items-center mb-2">
+                    <input type="checkbox" id="${list}-${item}" 
+                           class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                           ${checked ? 'checked' : ''}
+                           onchange="saveCheck('${list}', '${item}', this.checked)">
+                    <label class="ml-2 text-sm font-medium text-gray-900" for="${list}-${item}">
+                        ${item}
+                    </label>
+                </div>
+            `;
+        }
+
+        function saveCheck(list, item, checked) {
+            localStorage.setItem(`${list}-${item}`, checked);
+        }
+
+        function renderList(items, listId, listName) {
+            const container = document.getElementById(listId);
+            container.innerHTML = items.map(item => createCheckbox(item, listName)).join('');
+        }
+
+        renderList(milagres, 'milagres-list', 'milagres');
+        renderList(feiticos, 'feiticos-list', 'feiticos');
+        renderList(piromancias, 'piromancias-list', 'piromancias');
+    </script>
+</body>
+</html>
